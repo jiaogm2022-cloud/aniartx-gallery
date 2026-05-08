@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-05-08T16:13:28.984Z",
+  "generatedAt": "2026-05-08T17:14:51.998Z",
   "source": "ART IP artwork library",
-  "total": 823,
+  "total": 830,
   "ips": [
     {
       "name": "阿拉蕾",
@@ -22,6 +22,13 @@
       "count": 1,
       "types": {
         "手稿": 1
+      }
+    },
+    {
+      "name": "博物馆级别",
+      "count": 6,
+      "types": {
+        "原画": 6
       }
     },
     {
@@ -200,9 +207,9 @@
     },
     {
       "name": "佐藤好春",
-      "count": 3,
+      "count": 4,
       "types": {
-        "手稿": 3
+        "手稿": 4
       }
     }
   ],
@@ -221,11 +228,11 @@
     },
     {
       "name": "手稿",
-      "count": 205
+      "count": 206
     },
     {
       "name": "原画",
-      "count": 188
+      "count": 194
     }
   ],
   "artworks": [
@@ -278,6 +285,66 @@
       "fileName": "G01-01CD066.jpg",
       "path": "手稿1/北条司/G01-01CD066.jpg",
       "src": "art-gallery-assets/%E6%89%8B%E7%A8%BF1/%E5%8C%97%E6%9D%A1%E5%8F%B8/G01-01CD066.webp"
+    },
+    {
+      "id": "博物馆级别/IMG_3428.webp",
+      "ip": "博物馆级别",
+      "type": "原画",
+      "item": "",
+      "title": "博物馆级别 · 原画",
+      "fileName": "IMG_3428.jpg",
+      "path": "博物馆级别/IMG_3428.jpg",
+      "src": "art-gallery-assets/%E5%8D%9A%E7%89%A9%E9%A6%86%E7%BA%A7%E5%88%AB/IMG_3428.webp"
+    },
+    {
+      "id": "博物馆级别/IMG_3429.webp",
+      "ip": "博物馆级别",
+      "type": "原画",
+      "item": "",
+      "title": "博物馆级别 · 原画",
+      "fileName": "IMG_3429.JPG",
+      "path": "博物馆级别/IMG_3429.JPG",
+      "src": "art-gallery-assets/%E5%8D%9A%E7%89%A9%E9%A6%86%E7%BA%A7%E5%88%AB/IMG_3429.webp"
+    },
+    {
+      "id": "博物馆级别/IMG_3430.webp",
+      "ip": "博物馆级别",
+      "type": "原画",
+      "item": "",
+      "title": "博物馆级别 · 原画",
+      "fileName": "IMG_3430.JPG",
+      "path": "博物馆级别/IMG_3430.JPG",
+      "src": "art-gallery-assets/%E5%8D%9A%E7%89%A9%E9%A6%86%E7%BA%A7%E5%88%AB/IMG_3430.webp"
+    },
+    {
+      "id": "博物馆级别/IMG_3431.webp",
+      "ip": "博物馆级别",
+      "type": "原画",
+      "item": "",
+      "title": "博物馆级别 · 原画",
+      "fileName": "IMG_3431.JPG",
+      "path": "博物馆级别/IMG_3431.JPG",
+      "src": "art-gallery-assets/%E5%8D%9A%E7%89%A9%E9%A6%86%E7%BA%A7%E5%88%AB/IMG_3431.webp"
+    },
+    {
+      "id": "博物馆级别/IMG_3433.webp",
+      "ip": "博物馆级别",
+      "type": "原画",
+      "item": "",
+      "title": "博物馆级别 · 原画",
+      "fileName": "IMG_3433.JPG",
+      "path": "博物馆级别/IMG_3433.JPG",
+      "src": "art-gallery-assets/%E5%8D%9A%E7%89%A9%E9%A6%86%E7%BA%A7%E5%88%AB/IMG_3433.webp"
+    },
+    {
+      "id": "博物馆级别/IMG_3434.webp",
+      "ip": "博物馆级别",
+      "type": "原画",
+      "item": "",
+      "title": "博物馆级别 · 原画",
+      "fileName": "IMG_3434.JPG",
+      "path": "博物馆级别/IMG_3434.JPG",
+      "src": "art-gallery-assets/%E5%8D%9A%E7%89%A9%E9%A6%86%E7%BA%A7%E5%88%AB/IMG_3434.webp"
     },
     {
       "id": "东京喰种/1/1-1.webp",
@@ -8458,6 +8525,16 @@
       "fileName": "G01-01CD015.jpg",
       "path": "手稿1/佐藤好春/G01-01CD015.jpg",
       "src": "art-gallery-assets/%E6%89%8B%E7%A8%BF1/%E4%BD%90%E8%97%A4%E5%A5%BD%E6%98%A5/G01-01CD015.webp"
+    },
+    {
+      "id": "手稿1/佐藤好春/IMG_3432.webp",
+      "ip": "佐藤好春",
+      "type": "手稿",
+      "item": "",
+      "title": "佐藤好春 · 手稿",
+      "fileName": "IMG_3432.JPG",
+      "path": "手稿1/佐藤好春/IMG_3432.JPG",
+      "src": "art-gallery-assets/%E6%89%8B%E7%A8%BF1/%E4%BD%90%E8%97%A4%E5%A5%BD%E6%98%A5/IMG_3432.webp"
     }
   ]
 }

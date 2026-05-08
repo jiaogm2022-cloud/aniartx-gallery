@@ -79,6 +79,7 @@ const copy = {
 const ipLabels = {
   "阿拉蕾": "Dr. Slump Arale",
   "版画": "Prints",
+  "博物馆级别": "Museum Grade",
   "北条司": "Tsukasa Hojo",
   "东京喰种": "Tokyo Ghoul",
   "哆啦A梦": "Doraemon",
