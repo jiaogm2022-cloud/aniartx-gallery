@@ -29,9 +29,60 @@ const els = {
 
 const collator = new Intl.Collator("zh-Hans-CN", { numeric: true, sensitivity: "base" });
 
+const ipLabels = {
+  "阿拉蕾": "Dr. Slump Arale",
+  "版画": "Prints",
+  "北条司": "Tsukasa Hojo",
+  "东京喰种": "Tokyo Ghoul",
+  "哆啦A梦": "Doraemon",
+  "怪医黑杰克": "Black Jack",
+  "灌篮高手": "Slam Dunk",
+  "海报": "Posters",
+  "航海王": "One Piece",
+  "火影忍者": "Naruto",
+  "极上生徒会": "Best Student Council",
+  "精灵宝可梦": "Pokemon",
+  "快餐厅之恋": "Pia Carrot",
+  "蜡笔小新": "Crayon Shin-chan",
+  "龙珠": "Dragon Ball",
+  "美少女战士": "Sailor Moon",
+  "名侦探柯南": "Detective Conan",
+  "魔卡少女樱": "Cardcaptor Sakura",
+  "森林大帝": "Jungle Emperor Leo",
+  "死神": "Bleach",
+  "松本零士": "Leiji Matsumoto",
+  "天地无用": "Tenchi Muyo!",
+  "铁臂阿童木": "Astro Boy",
+  "樱花大战": "Sakura Wars",
+  "樱桃小丸子": "Chibi Maruko-chan",
+  "幽游白书": "Yu Yu Hakusho",
+  "椎名高志": "Takashi Shiina",
+  "佐藤好春": "Yoshiharu Sato",
+};
+
+const typeLabels = {
+  "原画": "Original Art",
+  "手稿": "Production Drawing",
+  "赛璐珞": "Animation Cel",
+  "版画": "Print",
+  "海报": "Poster",
+};
+
+function displayIp(ip) {
+  return ipLabels[ip] ?? ip;
+}
+
+function displayType(type) {
+  return typeLabels[type] ?? type;
+}
+
+function displayTitle(artwork) {
+  return [displayIp(artwork.ip), displayType(artwork.type), artwork.item].filter(Boolean).join(" · ");
+}
+
 function matchesSearch(artwork) {
   if (!state.search) return true;
-  const haystack = `${artwork.ip} ${artwork.type} ${artwork.item} ${artwork.fileName} ${artwork.path}`.toLowerCase();
+  const haystack = `${artwork.ip} ${displayIp(artwork.ip)} ${artwork.type} ${displayType(artwork.type)} ${artwork.item} ${artwork.fileName} ${artwork.path}`.toLowerCase();
   return haystack.includes(state.search);
 }
 
@@ -47,11 +98,11 @@ function applyFilters() {
 }
 
 function updateSummary() {
-  const activeIpLabel = state.activeIp === "all" ? "全部作品" : state.activeIp;
-  const activeTypeLabel = state.activeType === "all" ? "" : ` · ${state.activeType}`;
+  const activeIpLabel = state.activeIp === "all" ? "All Artworks" : displayIp(state.activeIp);
+  const activeTypeLabel = state.activeType === "all" ? "" : ` · ${displayType(state.activeType)}`;
 
   els.pageTitle.textContent = activeIpLabel;
-  els.eyebrow.textContent = `${state.filtered.length} 件${activeTypeLabel}`;
+  els.eyebrow.textContent = `${state.filtered.length} artworks${activeTypeLabel}`;
   els.visibleCount.textContent = state.filtered.length;
   els.emptyState.hidden = state.filtered.length > 0;
 
@@ -61,8 +112,8 @@ function updateSummary() {
 }
 
 function renderIpNav(ips) {
-  const allButton = createIpButton("all", "全部 IP", state.artworks.length);
-  const buttons = ips.map((ip) => createIpButton(ip.name, ip.name, ip.count));
+  const allButton = createIpButton("all", "All IP", state.artworks.length);
+  const buttons = ips.map((ip) => createIpButton(ip.name, displayIp(ip.name), ip.count));
   els.ipNav.replaceChildren(allButton, ...buttons);
   els.ipTotal.textContent = ips.length;
 }
@@ -84,8 +135,8 @@ function createIpButton(value, label, count) {
 
 function renderTypes(types) {
   const options = [
-    new Option("全部类型", "all"),
-    ...types.sort((a, b) => collator.compare(a.name, b.name)).map((type) => new Option(`${type.name} (${type.count})`, type.name)),
+    new Option("All categories", "all"),
+    ...types.sort((a, b) => collator.compare(displayType(a.name), displayType(b.name))).map((type) => new Option(`${displayType(type.name)} (${type.count})`, type.name)),
   ];
   els.typeSelect.replaceChildren(...options);
 }
@@ -105,8 +156,8 @@ function renderGallery() {
       </figcaption>
     `;
 
-    card.querySelector("img").alt = artwork.title;
-    card.querySelector("strong").textContent = artwork.title;
+    card.querySelector("img").alt = displayTitle(artwork);
+    card.querySelector("strong").textContent = displayTitle(artwork);
     card.querySelector("span").textContent = artwork.fileName;
     card.addEventListener("click", () => openViewer(index));
     fragment.append(card);
@@ -126,8 +177,8 @@ function renderViewer() {
   if (!artwork) return;
 
   els.viewerImage.src = artwork.src;
-  els.viewerImage.alt = artwork.title;
-  els.viewerTitle.textContent = artwork.title;
+  els.viewerImage.alt = displayTitle(artwork);
+  els.viewerTitle.textContent = displayTitle(artwork);
   els.viewerMeta.textContent = `${artwork.fileName} · ${state.viewerIndex + 1}/${state.filtered.length}`;
 }
 
@@ -176,5 +227,5 @@ document.addEventListener("keydown", (event) => {
 init().catch((error) => {
   console.error(error);
   els.emptyState.hidden = false;
-  els.emptyState.textContent = "画库数据加载失败。";
+  els.emptyState.textContent = "Gallery data failed to load.";
 });

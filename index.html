@@ -1,32 +1,32 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ART IP 画库</title>
+    <title>ANIARTX Gallery</title>
     <link rel="stylesheet" href="css/art-gallery.css">
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="index.html" aria-label="ARTIPGLOBAL 首页">
+      <a class="brand" href="index.html" aria-label="ANIARTX home">
         <span class="brand-mark">ART IP</span>
-        <span class="brand-title">画库</span>
+        <span class="brand-title">Gallery</span>
       </a>
       <div class="toolbar" role="search">
         <label class="search">
-          <span>搜索</span>
-          <input id="searchInput" type="search" placeholder="输入 IP、类型、文件名" autocomplete="off">
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="Search IP, category, file name" autocomplete="off">
         </label>
-        <select id="typeSelect" aria-label="按类型筛选">
-          <option value="all">全部类型</option>
+        <select id="typeSelect" aria-label="Filter by category">
+          <option value="all">All categories</option>
         </select>
       </div>
     </header>
 
     <main class="layout">
-      <aside class="sidebar" aria-label="IP 分类">
+      <aside class="sidebar" aria-label="IP categories">
         <div class="sidebar-head">
-          <p>IP 分类</p>
+          <p>IP Categories</p>
           <strong id="ipTotal">0</strong>
         </div>
         <nav id="ipNav" class="ip-nav"></nav>
@@ -35,22 +35,22 @@
       <section class="content" aria-live="polite">
         <div class="summary">
           <div>
-            <p id="eyebrow">全部作品</p>
-            <h1 id="pageTitle">ART IP 画库</h1>
+            <p id="eyebrow">All artworks</p>
+            <h1 id="pageTitle">ANIARTX Gallery</h1>
           </div>
           <div class="stats">
-            <span><strong id="visibleCount">0</strong> 件</span>
-            <span><strong id="totalCount">0</strong> 总数</span>
+            <span><strong id="visibleCount">0</strong> shown</span>
+            <span><strong id="totalCount">0</strong> total</span>
           </div>
         </div>
         <div id="gallery" class="gallery"></div>
-        <p id="emptyState" class="empty-state" hidden>没有找到匹配的作品。</p>
+        <p id="emptyState" class="empty-state" hidden>No matching artworks found.</p>
       </section>
     </main>
 
     <dialog id="viewer" class="viewer">
-      <button class="viewer-close" type="button" aria-label="关闭">×</button>
-      <button class="viewer-nav viewer-prev" type="button" aria-label="上一张">‹</button>
+      <button class="viewer-close" type="button" aria-label="Close">×</button>
+      <button class="viewer-nav viewer-prev" type="button" aria-label="Previous artwork">‹</button>
       <figure>
         <img id="viewerImage" alt="">
         <figcaption>
@@ -58,7 +58,7 @@
           <span id="viewerMeta"></span>
         </figcaption>
       </figure>
-      <button class="viewer-nav viewer-next" type="button" aria-label="下一张">›</button>
+      <button class="viewer-nav viewer-next" type="button" aria-label="Next artwork">›</button>
     </dialog>
 
     <script src="js/art-gallery.js" defer></script>
