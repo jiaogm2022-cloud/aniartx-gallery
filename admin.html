@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ANIARTX Gallery Admin</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #181512;
+        --muted: #746c63;
+        --line: #ded7cd;
+        --paper: #f7f2ea;
+        --panel: #fffaf3;
+        --accent: #9b1c31;
+        --green: #1d5f55;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 74px;
+        padding: 14px 24px;
+        border-bottom: 1px solid rgba(24, 21, 18, 0.1);
+        background: rgba(247, 242, 234, 0.94);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        font-weight: 800;
+      }
+
+      .brand span:first-child {
+        padding: 8px 10px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 13px;
+      }
+
+      .brand span:last-child {
+        font-size: 22px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .button {
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0 14px;
+        background: var(--panel);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .button.primary {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .button.danger {
+        border-color: rgba(155, 28, 49, 0.35);
+        color: var(--accent);
+      }
+
+      .button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: minmax(320px, 410px) 1fr;
+        gap: 24px;
+        padding: 24px;
+      }
+
+      .panel {
+        border: 1px solid rgba(24, 21, 18, 0.1);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: 0 10px 26px rgba(24, 21, 18, 0.07);
+      }
+
+      .panel header {
+        padding: 18px 18px 0;
+      }
+
+      .panel h1,
+      .panel h2 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .panel p {
+        margin: 7px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .form {
+        display: grid;
+        gap: 14px;
+        padding: 18px;
+      }
+
+      label {
+        display: grid;
+        gap: 7px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      input,
+      select {
+        width: 100%;
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0 12px;
+        background: #fff;
+        color: var(--ink);
+        outline: none;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(155, 28, 49, 0.12);
+      }
+
+      input[type="file"] {
+        height: auto;
+        padding: 10px;
+      }
+
+      .filters {
+        display: grid;
+        grid-template-columns: 1fr 170px;
+        gap: 12px;
+        padding: 18px;
+      }
+
+      .status {
+        min-height: 24px;
+        padding: 0 18px 18px;
+        color: var(--green);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 14px;
+        padding: 0 18px 18px;
+      }
+
+      .card {
+        overflow: hidden;
+        border: 1px solid rgba(24, 21, 18, 0.1);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .card img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: #e7ded2;
+      }
+
+      .card-body {
+        display: grid;
+        gap: 8px;
+        padding: 10px;
+      }
+
+      .card strong,
+      .card span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .card span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .card .button {
+        min-height: 36px;
+      }
+
+      @media (max-width: 900px) {
+        main {
+          display: block;
+          padding: 16px;
+        }
+
+        .panel {
+          margin-bottom: 16px;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .actions {
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span>ART IP</span>
+        <span>Gallery Admin</span>
+      </div>
+      <div class="actions">
+        <a class="button" href="/" target="_blank" rel="noreferrer">Open Gallery</a>
+        <button id="refreshButton" class="button" type="button">Refresh</button>
+        <button id="publishButton" class="button primary" type="button">Publish to GitHub</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel">
+        <header>
+          <h1>Add Artworks</h1>
+          <p>Upload images, choose an IP and category, then publish when ready.</p>
+        </header>
+        <form id="uploadForm" class="form">
+          <label>
+            IP / Series
+            <input id="ipInput" name="ip" list="ipList" placeholder="Detective Conan / 名侦探柯南" required>
+            <datalist id="ipList"></datalist>
+          </label>
+          <label>
+            Category
+            <select id="typeInput" name="type" required>
+              <option value="原画">Original Art / 原画</option>
+              <option value="手稿">Production Drawing / 手稿</option>
+              <option value="赛璐珞">Animation Cel / 赛璐珞</option>
+              <option value="版画">Print / 版画</option>
+              <option value="海报">Poster / 海报</option>
+            </select>
+          </label>
+          <label>
+            Item / Group
+            <input id="itemInput" name="item" placeholder="Optional, e.g. 124">
+          </label>
+          <label>
+            Images
+            <input id="fileInput" name="files" type="file" accept="image/*" multiple required>
+          </label>
+          <button id="uploadButton" class="button primary" type="submit">Upload Images</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <header>
+          <h2>Manage Gallery</h2>
+          <p id="summaryText">Loading artworks...</p>
+        </header>
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="Search IP, category, file name">
+          <select id="typeFilter">
+            <option value="all">All categories</option>
+          </select>
+        </div>
+        <div id="status" class="status"></div>
+        <div id="gallery" class="gallery"></div>
+      </section>
+    </main>
+
+    <script>
+      const state = {
+        artworks: [],
+        ips: [],
+        types: [],
+        search: "",
+        type: "all",
+      };
+
+      const els = {
+        uploadForm: document.querySelector("#uploadForm"),
+        uploadButton: document.querySelector("#uploadButton"),
+        publishButton: document.querySelector("#publishButton"),
+        refreshButton: document.querySelector("#refreshButton"),
+        fileInput: document.querySelector("#fileInput"),
+        ipInput: document.querySelector("#ipInput"),
+        ipList: document.querySelector("#ipList"),
+        typeInput: document.querySelector("#typeInput"),
+        itemInput: document.querySelector("#itemInput"),
+        typeFilter: document.querySelector("#typeFilter"),
+        searchInput: document.querySelector("#searchInput"),
+        gallery: document.querySelector("#gallery"),
+        status: document.querySelector("#status"),
+        summaryText: document.querySelector("#summaryText"),
+      };
+
+      const typeLabels = {
+        "原画": "Original Art",
+        "手稿": "Production Drawing",
+        "赛璐珞": "Animation Cel",
+        "版画": "Print",
+        "海报": "Poster",
+      };
+
+      function setStatus(message, isError = false) {
+        els.status.textContent = message;
+        els.status.style.color = isError ? "#9b1c31" : "#1d5f55";
+      }
+
+      function artworkTitle(artwork) {
+        return [artwork.ip, typeLabels[artwork.type] || artwork.type, artwork.item].filter(Boolean).join(" · ");
+      }
+
+      function fileToDataUrl(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve({ name: file.name, dataUrl: reader.result });
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function api(path, options = {}) {
+        const response = await fetch(path, {
+          headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+          ...options,
+        });
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(data.error || `Request failed: ${response.status}`);
+        }
+
+        return data;
+      }
+
+      async function loadGallery() {
+        const data = await api("/api/gallery");
+        state.artworks = data.artworks;
+        state.ips = data.ips;
+        state.types = data.types;
+        renderControls();
+        renderGallery();
+        setStatus("");
+      }
+
+      function renderControls() {
+        els.summaryText.textContent = `${state.artworks.length} artworks across ${state.ips.length} IP groups`;
+        els.ipList.replaceChildren(...state.ips.map((ip) => {
+          const option = document.createElement("option");
+          option.value = ip.name;
+          return option;
+        }));
+        els.typeFilter.replaceChildren(
+          new Option("All categories", "all"),
+          ...state.types.map((type) => new Option(`${typeLabels[type.name] || type.name} (${type.count})`, type.name))
+        );
+        els.typeFilter.value = state.type;
+      }
+
+      function renderGallery() {
+        const search = state.search.toLowerCase();
+        const filtered = state.artworks.filter((artwork) => {
+          const haystack = `${artwork.ip} ${artwork.type} ${typeLabels[artwork.type] || ""} ${artwork.item} ${artwork.fileName} ${artwork.path}`.toLowerCase();
+          const searchMatch = !search || haystack.includes(search);
+          const typeMatch = state.type === "all" || artwork.type === state.type;
+          return searchMatch && typeMatch;
+        });
+
+        els.gallery.replaceChildren(...filtered.map((artwork) => {
+          const card = document.createElement("article");
+          card.className = "card";
+          card.innerHTML = `
+            <img loading="lazy" src="${artwork.src}" alt="">
+            <div class="card-body">
+              <strong></strong>
+              <span></span>
+              <button class="button danger" type="button">Delete</button>
+            </div>
+          `;
+          card.querySelector("img").alt = artworkTitle(artwork);
+          card.querySelector("strong").textContent = artworkTitle(artwork);
+          card.querySelector("span").textContent = artwork.fileName;
+          card.querySelector("button").addEventListener("click", () => deleteArtwork(artwork.id));
+          return card;
+        }));
+      }
+
+      async function uploadImages(event) {
+        event.preventDefault();
+        const files = [...els.fileInput.files];
+        if (!files.length) return;
+
+        els.uploadButton.disabled = true;
+        setStatus(`Uploading ${files.length} image${files.length === 1 ? "" : "s"}...`);
+
+        try {
+          const payload = {
+            ip: els.ipInput.value.trim(),
+            type: els.typeInput.value,
+            item: els.itemInput.value.trim(),
+            files: await Promise.all(files.map(fileToDataUrl)),
+          };
+          const result = await api("/api/upload", { method: "POST", body: JSON.stringify(payload) });
+          setStatus(`Added ${result.added} artwork${result.added === 1 ? "" : "s"}. Remember to publish.`);
+          els.uploadForm.reset();
+          await loadGallery();
+        } catch (error) {
+          setStatus(error.message, true);
+        } finally {
+          els.uploadButton.disabled = false;
+        }
+      }
+
+      async function deleteArtwork(id) {
+        if (!confirm("Delete this artwork from the gallery?")) return;
+        setStatus("Deleting artwork...");
+        try {
+          await api("/api/delete", { method: "POST", body: JSON.stringify({ id }) });
+          setStatus("Artwork deleted. Remember to publish.");
+          await loadGallery();
+        } catch (error) {
+          setStatus(error.message, true);
+        }
+      }
+
+      async function publish() {
+        if (!confirm("Commit and push the current gallery changes to GitHub?")) return;
+        els.publishButton.disabled = true;
+        setStatus("Publishing to GitHub...");
+        try {
+          const result = await api("/api/publish", { method: "POST", body: JSON.stringify({}) });
+          setStatus(result.message);
+        } catch (error) {
+          setStatus(error.message, true);
+        } finally {
+          els.publishButton.disabled = false;
+        }
+      }
+
+      els.uploadForm.addEventListener("submit", uploadImages);
+      els.publishButton.addEventListener("click", publish);
+      els.refreshButton.addEventListener("click", loadGallery);
+      els.searchInput.addEventListener("input", (event) => {
+        state.search = event.target.value;
+        renderGallery();
+      });
+      els.typeFilter.addEventListener("change", (event) => {
+        state.type = event.target.value;
+        renderGallery();
+      });
+
+      loadGallery().catch((error) => setStatus(error.message, true));
+    </script>
+  </body>
+</html>
